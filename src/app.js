@@ -1,7 +1,23 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const mongoose = require("mongoose")
 
 const app = express()
+
+//String de conexão
+mongoose.connect("mongodb+srv://reprograma:reprogr@m@@cluster0.pgwdf.mongodb.net/clientes?retryWrites=true&w=majority", { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
+
+//Conexão com o mongo
+let db = mongoose.connection;
+
+// Captura de erro ou sucesso na conexão
+db.on("error", console.log.bind(console, "connection error:"))
+db.once("open", function (){
+  console.log("conexão feita com sucesso.")
+})
 
 //rotas
 const clientes = require("./routes/clientesRoute")
